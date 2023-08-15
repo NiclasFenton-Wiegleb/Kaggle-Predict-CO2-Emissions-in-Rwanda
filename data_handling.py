@@ -81,6 +81,41 @@ def load_data_drop_2020():
 
     return df
 
+def load_test_data():
+    #Load the test data in the same format as the training data
+    df = pd.read_csv("test.csv")
+
+    coordinates = []
+
+    for row in range(len(df.index)):
+        x = df["latitude"][row]
+        y = df["longitude"][row]
+
+        coordinates.append((x,y))
+
+    df["coordinates"] = coordinates
+
+    df.drop(["latitude", "longitude"], axis=1, inplace=True)
+
+    year_week = []
+
+    for row in range(len(df.index)):
+
+        year = df["year"][row]
+        week = df["week_no"][row]
+
+        year_week.append("".join([str(year), str(week), "Mon"]))
+    
+    df["year_week"] = year_week
+
+
+    df["year_week"] = pd.to_datetime(df["year_week"], format= "%Y%W%a")
+    df["year_week"] = df["year_week"].dt.to_period("W")
+    df.set_index(pd.PeriodIndex(df["year_week"], freq="W"),drop=True, inplace= True)
+    df.drop("year_week", axis= 1, inplace=True)
+
+    return df
+
 def save_model(forecaster, file_path):
     #Save trained model to directory
 
@@ -90,6 +125,6 @@ def save_model(forecaster, file_path):
 
 if __name__ == "__main__":
 
-    df = load_data_drop_2020()
+    
 
-    print(df["year"].unique)
+    print(df.head())
