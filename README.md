@@ -22,6 +22,6 @@ We acknowledge Carbon Monitor for the use of the GRACED dataset, and special tha
 
 #### Please find the code and annotations regarding the project in the `predict-emissions-rwanda.ipynb` notebook.
 
- Competition Score: 27.54
+ Competition Score: 12.73
  
- Leaderboard: 369/1439
+ Leaderboard: 131/1442
